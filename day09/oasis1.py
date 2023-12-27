@@ -1,0 +1,29 @@
+with open("input.in", "r") as file:
+    data = file.readlines()
+
+answer = 0
+for i, line in enumerate(data): 
+    triangle = [[int(x) for x in line.split()]]
+
+    while True: 
+        newlist = []
+
+        for j in range(len(triangle[len(triangle)-1])-1):
+            newlist.append(triangle[len(triangle)-1][j+1]-triangle[len(triangle)-1][j])
+        triangle.append(newlist)
+        flag = True
+
+        for item in triangle[-1]:
+            if item != 0:
+                flag = False
+
+        if flag:
+            break
+    
+    for j in range(len(triangle)-1, -1, -1):
+        if j == len(triangle)-1:
+            triangle[j].append(0)
+        else:
+            triangle[j].append(triangle[j][-1] + triangle[j+1][-1])
+    answer += triangle[0][-1]
+print(answer)
